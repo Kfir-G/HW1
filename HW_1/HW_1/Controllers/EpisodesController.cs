@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using HW_1.Models;
 
 namespace HW_1.Controllers
 {
@@ -22,7 +23,7 @@ namespace HW_1.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Episode episode)
         {
         }
 

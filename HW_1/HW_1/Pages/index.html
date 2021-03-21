@@ -16,18 +16,16 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous">
     </script>
-
-    <script src="Scripts/ajaxCalls.js"></script>
-
+    <script src="../Scripts/ajaxCalls.js"></script>
     <script>
 
-        // https://api.themoviedb.org/3/search/tv?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
+        // https://api.themoviedb.org/3/search/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
 
         $(document).ready(function () {
             $("#getTV").click(getTV);
 
-            // replace it with your own key
-            key = "1c107f2bd2f3fc2aee24aa4f2f8d8647";
+            // replace it with your own key -DONE
+            key = "1e5a5ee20af326aebb685a34a1868b76";
 
             url = "https://api.themoviedb.org/";
             imagePath = "https://image.tmdb.org/t/p/w500/";
