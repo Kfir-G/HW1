@@ -7,9 +7,8 @@
     <style type="text/css">
 
         #ph > img {
-            height:300px;
+            height: 300px;
         }
-
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -17,6 +16,12 @@
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>-->
+
+
+
+
+
     <script>
 
         // https://api.themoviedb.org/3/search/tv?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
@@ -37,7 +42,7 @@
         });
 
         function getTV() {
-            
+
             let name = $("#tvShowName").val();
             let method = "3/search/tv?";
             let api_key = "api_key=" + key;
@@ -48,6 +53,7 @@
         }
 
         function getTVSuccessCB(tv) {
+            console.log("TV kfir");
             console.log(tv);
             tvId = tv.results[0].id;
             let poster = imagePath + tv.results[0].poster_path;
@@ -55,32 +61,40 @@
             $("#ph").html(str);
 
             let method = "3/tv/";
-            let api_key = "api_key=" + key;
-            let apiCall = url + method + tvId + "/season/" + 0 + "?" + api_key; //^ change seasson 1 to multi
+            let api_key = "api_key=" + key
+            let apiCall = url + method + tvId + "?" + api_key; //^ change seasson 1 to multi
 
             ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB)
         }
 
+        function renderSeason(season) {
+            $("#seasonredner").html('<select name="Seasons" id="seasonselect"></select>');
+            for (var i = 0; i < season.seasons.length; i++) {
+                $("#seasonselect").append('<option value=' + season.seasons[i].id + '><div>' + season.seasons[i].name + '</div></option>');
+            }
+        }
+
         function getSeasonSuccessCB(season) {
-            console.log(season);
+            console.log(season)
+            renderSeason(season)
         }
 
 
         function getSeasonErrorCB(err) {
-            console.log(err);
+            console.log(err)
         }
 
 
         function getTVErrorCB(err) {
-            console.log(err);
+            console.log(err)
         }
 
 
 
-        //https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
+                //https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
 
 
-        
+
 
     </script>
 
@@ -91,6 +105,8 @@
     <button id="getTV">Get TV Show</button>
     <div id="ph">
 
+    </div>
+    <div id="seasonredner">
 
     </div>
 

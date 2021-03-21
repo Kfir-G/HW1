@@ -7,7 +7,7 @@ namespace HW_1.Models
 {
     public class Episode
     {
-        //test omer
+        
         //---------data fields-------
         string name;
         int seasonNumber;
