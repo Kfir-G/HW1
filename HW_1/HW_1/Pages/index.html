@@ -34,7 +34,7 @@
             // 64467
             // 1416
 
-            //https://api.themoviedb.org/3/tv/1416/season/0/episode/64467?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US
+            //https://api.themoviedb.org/3/tv/1416/season/0/episode/64467?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US
 
         });
 
@@ -58,7 +58,7 @@
 
             let method = "3/tv/";
             let api_key = "api_key=" + key;
-            let apiCall = url + method + tvId + "/season/" + 0 + "?" + api_key
+            let apiCall = url + method + tvId + "/season/" + 0 + "?" + api_key; //^ change seasson 1 to multi
 
             ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB)
         }
