@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <style type="text/css">
+
+        #ph > img {
+            height:300px;
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous">
+    </script>
+
+    <script src="Scripts/ajaxCalls.js"></script>
+
+    <script>
+
+        // https://api.themoviedb.org/3/search/tv?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US&page=1&include_adult=false&query=Grey%27s%20Anatomy
+
+        $(document).ready(function () {
+            $("#getTV").click(getTV);
+
+            // replace it with your own key
+            key = "1c107f2bd2f3fc2aee24aa4f2f8d8647";
+
+            url = "https://api.themoviedb.org/";
+            imagePath = "https://image.tmdb.org/t/p/w500/";
+            // 64467
+            // 1416
+
+            //https://api.themoviedb.org/3/tv/1416/season/0/episode/64467?api_key=1c107f2bd2f3fc2aee24aa4f2f8d8647&language=en-US
+
+        });
+
+        function getTV() {
+            
+            let name = $("#tvShowName").val();
+            let method = "3/search/tv?";
+            let api_key = "api_key=" + key;
+            let moreParams = "&language=en-US&page=1&include_adult=false&";
+            let query = "query=" + encodeURIComponent(name);
+            let apiCall = url + method + api_key + moreParams + query;
+            ajaxCall("GET", apiCall, "", getTVSuccessCB, getTVErrorCB);
+        }
+
+        function getTVSuccessCB(tv) {
+            console.log(tv);
+            tvId = tv.results[0].id;
+            let poster = imagePath + tv.results[0].poster_path;
+            str = "<img src='" + poster + "'/>";
+            $("#ph").html(str);
+
+            let method = "3/tv/";
+            let api_key = "api_key=" + key;
+            let apiCall = url + method + tvId + "/season/" + 0 + "?" + api_key
+
+            ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB)
+        }
+
+        function getSeasonSuccessCB(season) {
+            console.log(season);
+        }
+
+
+        function getSeasonErrorCB(err) {
+            console.log(err);
+        }
+
+
+        function getTVErrorCB(err) {
+            console.log(err);
+        }
+
+
+
+        //https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
+
+
+        
+
+    </script>
+
+</head>
+<body>
+
+    <input type="text" id="tvShowName" />
+    <button id="getTV">Get TV Show</button>
+    <div id="ph">
+
+
+    </div>
+
+
+</body>
+</html>
