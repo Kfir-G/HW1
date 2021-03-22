@@ -16,9 +16,7 @@
             crossorigin="anonymous">
     </script>
     <script src="../Scripts/ajaxCalls.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>-->
-
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 
@@ -33,19 +31,17 @@
             key = "1e5a5ee20af326aebb685a34a1868b76";
 
             url = "https://api.themoviedb.org/";
-            imagePath = "https://image.tmdb.org/t/p/w500/";
-            // 64467
-            // 1416
+            imagePath = "https://image.tmdb.org/t/p/w500";
 
             //https://api.themoviedb.org/3/tv/1416/season/0/episode/64467?api_key=1e5a5ee20af326aebb685a34a1868b76&language=en-US
 
         });
 
         function getTV() {
-
+            $('.container').html('');
             let name = $("#tvShowName").val();
             let method = "3/search/tv?";
-            let api_key = "api_key=" + key;
+            api_key = "api_key=" + key;
             let moreParams = "&language=en-US&page=1&include_adult=false&";
             let query = "query=" + encodeURIComponent(name);
             let apiCall = url + method + api_key + moreParams + query;
@@ -53,13 +49,10 @@
         }
 
         function getTVSuccessCB(tv) {
-            console.log("TV kfir");
-            console.log(tv);
             tvId = tv.results[0].id;
             let poster = imagePath + tv.results[0].poster_path;
             str = "<img src='" + poster + "'/>";
             $("#ph").html(str);
-
             let method = "3/tv/";
             let api_key = "api_key=" + key
             let apiCall = url + method + tvId + "?" + api_key; //^ change seasson 1 to multi
@@ -67,27 +60,71 @@
             ajaxCall("GET", apiCall, "", getSeasonSuccessCB, getSeasonErrorCB)
         }
 
-        function renderSeason(season) {
-            $("#seasonredner").html('<select name="Seasons" id="seasonselect"></select>');
+            function renderSeason(season) {
+                
+                $("#seasonredner").html('<select onchange="getEpisode(this.value);" name="Seasons" id="seasonselect"></select>');
             for (var i = 0; i < season.seasons.length; i++) {
-                $("#seasonselect").append('<option value=' + season.seasons[i].id + '><div>' + season.seasons[i].name + '</div></option>');
+                $("#seasonselect").append('<option value=' + i +"|"+ tvId + '>' + season.seasons[i].name + '</option>');
             }
+            }
+
+
+            function getEpisode(value) {
+
+                let temp = value.split("|");
+                let seasonNumber = temp[0];
+                let tvID = temp[1];
+                //console.log(seasonNumber) 
+                //console.log(tvID) 
+                let method = "3/tv/";
+                let method2 = "/season/";
+
+                let apiCall = url + method + tvID + method2 + seasonNumber + "?" + api_key + "&language=en-US";
+
+                ajaxCall("GET", apiCall, "", getEpisodeSuccessCB, getEpisodeErrorCB)
+        
         }
 
-        function getSeasonSuccessCB(season) {
-            console.log(season)
+            function getEpisodeSuccessCB(episod) {
+                console.log(episod)
+                temp = "TEST"
+                $('.container').html('');
+                for (var i = 0; i < episod.episodes.length; i++) {
+                    poster = "https://image.tmdb.org/t/p/w500" + episod.episodes[i].still_path
+                    imgURL = "<img src='" + poster + "'/>";
+                    $('.container').append(
+                        '<div>Name: ' + episod.episodes[i].name +'</div>'
+                        + '<div>' + imgURL + '</div>'
+                        + '<div>Overview: ' + episod.episodes[i].overview + '</div>'
+                        + '<div>Air Date: ' + episod.episodes[i].air_date + '</div>'
+                        + '<button type="button" class="btn btn-success">Add Episode</button>'
+                        + '<br>'
+                        + '<br>'
+                    )
+
+                }
+                
+            }
+
+            function getEpisodeErrorCB() {
+                console.log(err)
+            }
+
+            function getSeasonSuccessCB(season) {
+            
+            
             renderSeason(season)
-        }
+            }
 
 
-        function getSeasonErrorCB(err) {
-            console.log(err)
-        }
+            function getSeasonErrorCB(err) {
+                console.log(err)
+            }
 
 
-        function getTVErrorCB(err) {
-            console.log(err)
-        }
+            function getTVErrorCB(err) {
+                console.log(err)
+            }
 
 
 
@@ -110,6 +147,10 @@
 
     </div>
 
+    <div class="container">
+            
+    </div>
+    
 
 </body>
 </html>
