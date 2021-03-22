@@ -22,6 +22,16 @@ namespace HW_1.Models.DAL
         {
             return episodeList;
         }
-        //insert to list func
+        public List<Episode> Get(string tvName)
+        {
+            List<Episode> filteredList = new List<Episode>();
+            Console.WriteLine(tvName);
+            foreach (Episode e in episodeList)
+            {
+                if (e.Name == tvName)
+                    filteredList.Add(e);
+            }
+            return filteredList;
+        }
     }
 }

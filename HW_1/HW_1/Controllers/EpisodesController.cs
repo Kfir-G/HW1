@@ -19,10 +19,12 @@ namespace HW_1.Controllers
             return episodeList;
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        // GET api/<controller>?year=5
+        public IEnumerable<Episode> Get(string tvName)
         {
-            return "value";
+            Episode e = new Episode();
+            List<Episode> sList = e.Get(tvName);
+            return sList;
         }
 
         // POST api/<controller>

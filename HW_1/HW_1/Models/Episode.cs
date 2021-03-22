@@ -54,6 +54,13 @@ namespace HW_1.Models
             return sList;
         }
 
+        public List<Episode> Get(string tvName)
+        {
+            DataServices ds = new DataServices();
+            List<Episode> sList = ds.Get(tvName);
+            return sList;
+        }
+
 
     }
 

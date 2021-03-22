@@ -33,24 +33,49 @@
                 }
             }
 
-
-            for (var i = 0; i < tvShow.length; i++) {
-                console.log(tvShow[i])
-            }
-
-
-
-            }
-            //console.log(episodes)
-            //$("#seasonredner").html('<select onchange="" name="Seasons" id="seasonselect"></select>');
             //for (var i = 0; i < tvShow.length; i++) {
-            //    $("#seasonselect").append('<option value=' + tvShow[i] + '>' + episodes[i] + '</option>');
+            //    console.log(tvShow[i])
             //}
-        /*}*/
+
+            
+            $("#seasonredner").html('<select onchange="getSelectedEpisodes(this.value)" name="Seasons" id="seasonselect"></select>');
+            for (var i = 0; i < tvShow.length; i++) {
+                $("#seasonselect").append('<option value=' + tvShow[i] + '>' + tvShow[i] + '</option>');
+            }
+        }
         function getAllEpisodesErrorCB() {
             console.log(err)
-            }
+        }
 
+        function getSelectedEpisodes(tvName) {
+
+            let api = "../api/Episodes?tvShow=" + tvName
+            ajaxCall("GET", api, "", getSelectedEpisodesSuccessCB, getSelectedEpisodesErrorCB)
+
+        }
+
+        function getSelectedEpisodesSuccessCB(episodes) {
+            $('.container').html('');
+            console.log("getSelectedEpisodesSuccessCB")
+            console.log(episodes)
+            for (var i = 0; i < episodes.length; i++) {
+                poster = "https://image.tmdb.org/t/p/w500" + episodes[i].still_path
+                imgURL = "<img src='" + poster + "'/>";
+                $('.container').append(
+                    '<div>Name: ' + episodes[i].name + '</div>'
+                    + '<div>' + imgURL + '</div>'
+                    + '<div>Overview: ' + episodes[i].overview + '</div>'
+                    + '<div>Air Date: ' + episodes[i].air_date + '</div>'
+                    + '<br>'
+                    + '<br>'
+                )
+
+            }
+        }
+        function getSelectedEpisodesErrorCB() {
+            console.log(err)
+        }
+        
     </script>
 
 </head>
@@ -59,7 +84,9 @@
 
 
     </div>
+    <div class="container">
 
+    </div>
 
 </body>
 </html>
