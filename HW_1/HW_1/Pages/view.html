@@ -22,19 +22,23 @@
         }
 
         function getAllEpisodesSuccessCB(episodes) {
-            tvShow = [""];
-            for (var episode in episodes) {
-                for (var tvName in tvShow) {
-                    if (episode.Name != tvName) {
-                        tvShow.push(episode.Name)
-                        break;
-                    }
-                }
+            tvShow = [];
+            tvShow.push(episodes[0].Name)
+            for (var i = 0; i < episodes.length; i++) {
+                if (tvShow.includes(episodes[i].Name)){
 
+                }
+                else {
+                    tvShow.push(episodes[i].Name)
+                }
             }
+
+
             for (var i = 0; i < tvShow.length; i++) {
                 console.log(tvShow[i])
             }
+
+
 
             }
             //console.log(episodes)
