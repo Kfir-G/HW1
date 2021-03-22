@@ -48,7 +48,8 @@
         }
 
         function getSelectedEpisodes(tvName) {
-
+            console.log("tvName")
+            console.log(tvName)
             let api = "../api/Episodes?tvShow=" + tvName
             ajaxCall("GET", api, "", getSelectedEpisodesSuccessCB, getSelectedEpisodesErrorCB)
 

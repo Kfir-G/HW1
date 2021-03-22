@@ -26,9 +26,8 @@ namespace HW_1.Models.DAL
         {
             List<Episode> filteredList = new List<Episode>();
             Console.WriteLine(tvName);
-            foreach (Episode e in episodeList)
-            {
-                if (e.Name == tvName)
+            foreach (Episode e in episodeList){      
+                if (e.Name.Contains(tvName))
                     filteredList.Add(e);
             }
             return filteredList;
