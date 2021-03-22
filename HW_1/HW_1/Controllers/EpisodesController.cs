@@ -6,14 +6,17 @@ using System.Net.Http;
 using System.Web.Http;
 using HW_1.Models;
 
+
 namespace HW_1.Controllers
 {
     public class EpisodesController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public IEnumerable<Episode> Get()
         {
-            return new string[] { "value10", "value2" };
+            Episode episode = new Episode();
+            List<Episode> episodeList = episode.Get();
+            return episodeList;
         }
 
         // GET api/<controller>/5
@@ -23,8 +26,10 @@ namespace HW_1.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody] Episode episode)
+        public int Post([FromBody] Episode episode)
         {
+            episode.Insert();
+            return 1;
         }
 
         // PUT api/<controller>/5

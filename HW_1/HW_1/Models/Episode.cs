@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HW_1.Models.DAL;
 
 namespace HW_1.Models
 {
@@ -17,6 +18,10 @@ namespace HW_1.Models
         string broadcastDate;
 
         //---------constructors-------
+        public Episode()
+        {
+
+        }
         public Episode(string name, int seasonNumber, string episodeName, string img, string description, string broadcastDate)
         {
             this.name = name;
@@ -33,5 +38,25 @@ namespace HW_1.Models
         public string Img { get => img; set => img = value; }
         public string Description { get => description; set => description = value; }
         public string BroadcastDate { get => broadcastDate; set => broadcastDate = value; }
+
+
+        public int Insert()
+        {
+            DataServices ds = new DataServices();
+            ds.Insert(this);
+            return 1;
+        }
+
+        public List<Episode> Get()
+        {
+            DataServices ds = new DataServices();
+            List<Episode> sList = ds.Get();
+            return sList;
+        }
+
+
     }
+
+
+
 }
