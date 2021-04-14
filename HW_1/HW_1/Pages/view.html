@@ -50,23 +50,24 @@
         function getSelectedEpisodes(tvName) {
             console.log("tvName")
             console.log(tvName)
-            let api = "../api/Episodes?tvShow=" + tvName
+            let api = "../api/Episodes?tvName=" + tvName
             ajaxCall("GET", api, "", getSelectedEpisodesSuccessCB, getSelectedEpisodesErrorCB)
 
         }
 
-        function getSelectedEpisodesSuccessCB(episodes) {
+        function getSelectedEpisodesSuccessCB(episodesJ) {
             $('.container').html('');
             console.log("getSelectedEpisodesSuccessCB")
-            console.log(episodes)
-            for (var i = 0; i < episodes.length; i++) {
-                poster = "https://image.tmdb.org/t/p/w500" + episodes[i].still_path
-                imgURL = "<img src='" + poster + "'/>";
+            console.log(episodesJ)
+            for (var i = 0; i < episodesJ.length; i++) {
+                imgURL = "<img src='" + episodesJ[i].Img + "'/>";
                 $('.container').append(
-                    '<div>Name: ' + episodes[i].name + '</div>'
+                    '<div>Name: ' + episodesJ[i].Name + '</div>'
                     + '<div>' + imgURL + '</div>'
-                    + '<div>Overview: ' + episodes[i].overview + '</div>'
-                    + '<div>Air Date: ' + episodes[i].air_date + '</div>'
+                    + '<div>Episode Name:' + episodesJ[i].EpisodeName + '</div>'
+                    + '<div>Season Number: ' + episodesJ[i].SeasonNumber + '</div>'
+                    + '<div>Overview: ' + episodesJ[i].Description + '</div>'
+                    + '<div>Air Date: ' + episodesJ[i].BroadcastDate + '</div>'
                     + '<br>'
                     + '<br>'
                 )
